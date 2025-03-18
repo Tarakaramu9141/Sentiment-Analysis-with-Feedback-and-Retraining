@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Provide Feedback</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        p {
+            font-size: 18px;
+            color: #34495e;
+        }
+        strong {
+            color: #2980b9;
+        }
+        form {
+            margin-top: 20px;
+        }
+        label {
+            font-size: 16px;
+            color: #7f8c8d;
+        }
+        .radio-group {
+            margin: 10px 0;
+        }
+        input[type="radio"] {
+            margin-right: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            margin: 10px 0;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+        }
+        input[type="submit"] {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #2980b9;
+        }
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        img {
+            max-width: 200px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Feedback</h1>
+        <p><strong>Statement:</strong> {{ text }}</p>
+        <p><strong>Predicted Sentiment:</strong> {{ predicted }}</p>
+
+        <div class="image-container">
+            <img src="https://th.bing.com/th/id/OIP.O8uTf1xbKAqCMZ-mjgx4ugHaGu?rs=1&pid=ImgDetMain" alt="Feedback Image">
+        </div>
+
+        <form method="POST">
+            <label>Is this prediction correct?</label><br>
+            <div class="radio-group">
+                <input type="radio" name="corrected" value="{{ predicted }}" required> Yes
+                <input type="radio" name="corrected" value="{% if predicted == 'Positive' %}Negative{% else %}Positive{% endif %}" required> No
+            </div>
+
+            <label>Category (Optional):</label><br>
+            <input type="text" name="category" placeholder="e.g., Complaint, Compliment"><br>
+
+            <input type="submit" value="Submit Feedback">
+        </form>
+    </div>
+</body>
+</html>

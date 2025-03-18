@@ -1,0 +1,11 @@
+text,predicted,corrected,category
+dummy positive,Positive,Positive,Test
+dummy negative,Negative,Negative,Test
+Yuvan fell into depression after love failure,Negative,Negative,Negative
+I am happy from the start of summer,Positive,Positive,
+He's waste fellow,Negative,Negative,
+I'm done with this work as it is not getting me a penny,Negative,Negative,
+I don't know how my heart is feeling. Is it going up or down because of  the lovefailure,Negative,Negative,
+You are disgrace to our family,Positive,Negative,Negative
+Fighting ,Negative,Negative,
+"How wonderful, the internet is down again.",Negative,Positive,Positive

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sentiment Analysis - Naruto Style!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff; /* Light blue background */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-image: url('https://www.aimtechnologies.co/wp-content/uploads/2023/08/Sentiment-Analysis-Instagram-scaled.jpg'); /* Replace with your image link */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        h1 {
+            color: #e91e63; /* Pinkish red for Naruto vibe */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        p {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        input[type="submit"] {
+            background-color: #ffc107; /* Yellow for energy */
+            color: #000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ffeb3b; /* Lighter yellow on hover */
+        }
+
+        .success-message {
+            color: green;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .naruto-image {
+            width: 150px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <h1>Sentiment Analysis - Believe it!</h1>
+    <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/b0adc028-8236-4891-b419-a780a8bc0540/df8o194-63177ab9-95f1-4ad8-8498-d9f9d8c18edb.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2IwYWRjMDI4LTgyMzYtNDg5MS1iNDE5LWE3ODBhOGJjMDU0MFwvZGY4bzE5NC02MzE3N2FiOS05NWYxLTRhZDgtODQ5OC1kOWY5ZDhjMThlZGIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0._KOrGyJ76V48pdcSN4BIvdtGXtIjqqu1zXkavYBd5j4" alt="Naruto" class="naruto-image"> <p>Enter a statement to predict its sentiment, dattebayo!</p>
+    <form method="POST">
+        <textarea name="text" rows="4" cols="50" required placeholder="What do you want to say?"></textarea><br>
+        <input type="submit" value="Predict">
+    </form>
+    {% if request.args.get('message') %}
+        <p class="success-message">{{ request.args.get('message') }}</p>
+    {% endif %}
+</body>
+</html>
