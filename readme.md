@@ -1,6 +1,8 @@
 # Sentiment Analysis with Feedback and Retraining
 
 This project implements a sentiment analysis system that allows for user feedback and model retraining. It uses a Logistic Regression model with TF-IDF vectorization for simplicity and effectiveness.
+#NOTE
+## If you want the data file which consists of 1 million ping a msg to tarakram9141@gmail.com
 
 ## Project Structure
 sentiment_project/
