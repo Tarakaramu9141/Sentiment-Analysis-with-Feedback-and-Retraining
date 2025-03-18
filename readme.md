@@ -93,11 +93,7 @@ sentiment_project/
 * **Data Validation**: add data validation to input fields.
 * **Testing**: add unit tests and integration tests.
 
-**To add images:**
 
-1.  **Create or find images:** Use image editing software or find suitable images online (ensure they are licensed for your use).
-2.  **Upload to a hosting service:** Upload the images to a service like Imgur or GitHub Pages to get direct image URLs.
-3.  **Replace placeholder URLs:** In the `README.md` file, replace `"https://i.imgur.com/your_sentiment_flow_image.png"` and `"https://i.imgur.com/your_ml_concepts_image.png"` with the actual image URLs.
 
 
 
