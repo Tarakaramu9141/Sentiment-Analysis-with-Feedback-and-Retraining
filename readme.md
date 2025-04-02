@@ -18,7 +18,10 @@ sentiment_project/
 ├── app/
 │   ├── templates/           # New folder for HTML templates
 │   │   ├── index.html      # Main page for statement input
-│   │   └── feedback.html   # Feedback form
+│   │   └── feedback.html # Feedback form
+|   |   |__ base.html
+|   |   |__ about.html
+|   |   |__ dashboard.html
 │   └── api.py              # Renamed to app.py if you prefer
 ├── requirements.txt
 └── README.md
