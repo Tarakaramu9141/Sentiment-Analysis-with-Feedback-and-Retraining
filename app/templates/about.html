@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-6">
+            <h1 class="display-4 mb-4">About Sentiment Analysis with Feedback and Retraining</h1>
+            <p class="lead">Advanced sentiment analysis powered by machine learning.</p>
+            
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3><i class="fas fa-cogs text-primary mr-2"></i> How It Works</h3>
+                    <p>Our system uses a multi-output classifier with logistic regression to analyze both sentiment (Positive/Negative) and content categories simultaneously.</p>
+                    
+                    <h3 class="mt-4"><i class="fas fa-chart-line text-accent mr-2"></i> Key Features</h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Real-time text analysis</li>
+                        <li class="list-group-item">Batch file processing (CSV, Excel, PDF)</li>
+                        <li class="list-group-item">Sensitive content detection</li>
+                        <li class="list-group-item">Interactive visualizations</li>
+                        <li class="list-group-item">Continuous learning from feedback</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card floating">
+                <div class="card-body text-center">
+                    <img src="https://cdn.dribbble.com/users/1787323/screenshots/14267663/media/4a123a12d380a8d3c0f3e3d9b7851b32.png" 
+                         alt="AI Analysis" 
+                         class="img-fluid rounded"
+                         style="max-height: 400px;">
+                    
+                    <div class="mt-4">
+                        <a href="/" class="btn btn-primary btn-lg mr-3">
+                            <i class="fas fa-play mr-2"></i> Try It Now
+                        </a>
+                        <a href="/dashboard" class="btn btn-accent btn-lg">
+                            <i class="fas fa-chart-bar mr-2"></i> View Dashboard
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card mt-5">
+        <div class="card-body">
+            <h2 class="text-center mb-4">Technology Stack</h2>
+            
+            <div class="row text-center">
+                <div class="col-md-2 col-4 mb-4">
+                    <i class="fab fa-python fa-4x text-primary mb-2"></i>
+                    <p>Python</p>
+                </div>
+                <div class="col-md-2 col-4 mb-4">
+                    <i class="fas fa-robot fa-4x text-accent mb-2"></i>
+                    <p>Scikit-learn</p>
+                </div>
+                <div class="col-md-2 col-4 mb-4">
+                    <i class="fab fa-js-square fa-4x text-warning mb-2"></i>
+                    <p>JavaScript</p>
+                </div>
+                <div class="col-md-2 col-4 mb-4">
+                    <i class="fab fa-html5 fa-4x text-danger mb-2"></i>
+                    <p>HTML5</p>
+                </div>
+                <div class="col-md-2 col-4 mb-4">
+                    <i class="fab fa-css3-alt fa-4x text-info mb-2"></i>
+                    <p>CSS3</p>
+                </div>
+                <div class="col-md-2 col-4 mb-4">
+                    <i class="fab fa-flask fa-4x text-dark mb-2"></i>
+                    <p>Flask</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
