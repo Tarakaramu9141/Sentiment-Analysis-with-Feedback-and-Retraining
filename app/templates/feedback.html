@@ -1,98 +1,283 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Provide Feedback</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4f8;
-            margin: 0;
-            padding: 20px;
-        }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        p {
-            font-size: 18px;
-            color: #34495e;
-        }
-        strong {
-            color: #2980b9;
-        }
-        form {
-            margin-top: 20px;
-        }
-        label {
-            font-size: 16px;
-            color: #7f8c8d;
-        }
-        .radio-group {
-            margin: 10px 0;
-        }
-        input[type="radio"] {
-            margin-right: 5px;
-        }
-        input[type="text"] {
-            width: 100%;
-            padding: 8px;
-            margin: 10px 0;
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-        }
-        input[type="submit"] {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        input[type="submit"]:hover {
-            background-color: #2980b9;
-        }
-        .image-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-        img {
-            max-width: 200px;
-            border-radius: 10px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Feedback</h1>
-        <p><strong>Statement:</strong> {{ text }}</p>
-        <p><strong>Predicted Sentiment:</strong> {{ predicted }}</p>
+{% extends "base.html" %}
 
-        <div class="image-container">
-            <img src="https://th.bing.com/th/id/OIP.O8uTf1xbKAqCMZ-mjgx4ugHaGu?rs=1&pid=ImgDetMain" alt="Feedback Image">
-        </div>
+{% block title %}Feedback{% endblock %}
 
-        <form method="POST">
-            <label>Is this prediction correct?</label><br>
-            <div class="radio-group">
-                <input type="radio" name="corrected" value="{{ predicted }}" required> Yes
-                <input type="radio" name="corrected" value="{% if predicted == 'Positive' %}Negative{% else %}Positive{% endif %}" required> No
+{% block content %}
+<div class="container py-5">
+    {% if text %}
+    <div class="card mx-auto" style="max-width: 800px;">
+        <div class="card-body">
+            <h2 class="text-center mb-4">Analysis Results</h2>
+            
+            <div class="form-group">
+                <label class="d-block mb-2" style="font-weight: 600;">Analyzed Text:</label>
+                <div class="card" style="background-color: var(--light-gray); padding: 1.5rem;">
+                    <p>{{ text }}</p>
+                </div>
             </div>
-
-            <label>Category (Optional):</label><br>
-            <input type="text" name="category" placeholder="e.g., Complaint, Compliment"><br>
-
-            <input type="submit" value="Submit Feedback">
-        </form>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title text-center">Sentiment</h3>
+                            <div class="text-center my-3">
+                                <span class="badge" style="
+                                    background-color: {% if predicted == 'Positive' %}#28a745{% else %}#dc3545{% endif %};
+                                    color: white;
+                                    padding: 0.5rem 1rem;
+                                    border-radius: 50px;
+                                    font-size: 1.1rem;
+                                ">
+                                    {{ predicted }}
+                                </span>
+                            </div>
+                            <p class="text-center text-muted">Predicted Sentiment</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h3 class="card-title text-center mb-3">Category Probabilities</h3>
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <form method="POST" class="mt-4">
+                <div class="form-group">
+                    <label class="d-block mb-2" style="font-weight: 600;">Is this prediction correct?</label>
+                    <div class="radio-group">
+                        <label class="radio-option">
+                            <input type="radio" name="corrected" value="{{ predicted }}" required>
+                            <span>Yes</span>
+                        </label>
+                        <label class="radio-option">
+                            <input type="radio" name="corrected" value="{% if predicted == 'Positive' %}Negative{% else %}Positive{% endif %}" required>
+                            <span>No</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category" class="d-block mb-2" style="font-weight: 600;">Content Category</label>
+                    <select name="category" id="category" class="form-control">
+                        <option value="General">General</option>
+                        <option value="Child abuse">Child abuse</option>
+                        <option value="Depression/Suicidal">Depression/Suicidal</option>
+                        <option value="Political abuse">Political abuse</option>
+                        <option value="Sexual abuse">Sexual abuse</option>
+                        <option value="Religious abuse">Religious abuse</option>
+                        <option value="Sarcasm">Sarcasm</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group mt-4">
+                    <label for="notes" class="d-block mb-2" style="font-weight: 600;">Additional Notes (Optional)</label>
+                    <textarea name="notes" id="notes" class="form-control" placeholder="Any additional feedback about this analysis..."></textarea>
+                </div>
+                
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane mr-2"></i> Submit Feedback
+                    </button>
+                    <a href="/" class="btn btn-outline ml-3">
+                        <i class="fas fa-home mr-2"></i> Back to Home
+                    </a>
+                </div>
+            </form>
+        </div>
     </div>
-</body>
-</html>
+    
+    <script>
+        // Category Chart
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'doughnut',
+            data: {
+                labels: {{ category_probs.keys()|list|tojson }},
+                datasets: [{
+                    data: {{ category_probs.values()|list|tojson }},
+                    backgroundColor: [
+                        '#3a86ff',
+                        '#8338ec',
+                        '#ff006e',
+                        '#fb5607',
+                        '#ffbe0b',
+                        '#4cc9f0',
+                        '#80ffdb'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                cutout: '70%',
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            boxWidth: 12,
+                            padding: 20
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    
+    {% else %}
+    <div class="card">
+        <div class="card-body">
+            <h2 class="text-center mb-4">Batch Analysis Results</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title text-center">Sentiment Distribution</h3>
+                            <canvas id="sentimentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title text-center">Category Distribution</h3>
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h3 class="card-title">Comments by Category</h3>
+                    
+                    <div class="accordion" id="commentsAccordion">
+                        {% for category, comments in comments_by_category.items() %}
+                        <div class="card">
+                            <div class="card-header" id="heading{{ loop.index }}">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ loop.index }}" aria-expanded="true" aria-controls="collapse{{ loop.index }}">
+                                        {{ category }} ({{ comments|length }} comments)
+                                    </button>
+                                </h5>
+                            </div>
+                            
+                            <div id="collapse{{ loop.index }}" class="collapse" aria-labelledby="heading{{ loop.index }}" data-parent="#commentsAccordion">
+                                <div class="card-body">
+                                    {% if comments %}
+                                    <ul class="list-group">
+                                        {% for comment in comments %}
+                                        <li class="list-group-item">{{ comment }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% else %}
+                                    <p>No comments in this category.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <a href="/" class="btn btn-primary">
+                    <i class="fas fa-home mr-2"></i> Back to Home
+                </a>
+                <a href="/dashboard" class="btn btn-outline ml-3">
+                    <i class="fas fa-chart-bar mr-2"></i> View Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Sentiment Chart
+        const sentimentCtx = document.getElementById('sentimentChart').getContext('2d');
+        const sentimentChart = new Chart(sentimentCtx, {
+            type: 'pie',
+            data: {
+                labels: Object.keys({{ sentiment_dist|tojson }}),
+                datasets: [{
+                    data: Object.values({{ sentiment_dist|tojson }}),
+                    backgroundColor: ['#28a745', '#dc3545'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.label}: ${context.raw}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Category Chart
+        const categoryCtx = document.getElementById('categoryChart').getContext('2d');
+        const categoryChart = new Chart(categoryCtx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys({{ category_dist|tojson }}),
+                datasets: [{
+                    label: 'Percentage',
+                    data: Object.values({{ category_dist|tojson }}),
+                    backgroundColor: '#3a86ff',
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `${context.raw}%`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+    {% endif %}
+</div>
+{% endblock %}
